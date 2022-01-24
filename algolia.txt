@@ -1,0 +1,11 @@
+npm i gatsby-plugin-algolia
+
+npm install algoliasearch react-instantsearch-dom
+
+GATSBY_ALGOLIA_APP_ID=7ILD27XJ21
+
+GATSBY_ALGOLIA_ADMIN_KEY=6c278dd4b900fa4b6978e38a87433cd3
+
+GATSBY_ALGOLIA_INDEX_NAME=Blog
+
+GATSBY_ALGOLIA_SEARCH_KEY=857db6a69604f93506dde9579d4c9c61

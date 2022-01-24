@@ -1,0 +1,5 @@
+install npm install gatsby-plugin-react-helmet react-helmet
+`gatsby-plugin-react-helmet` into gatsby config
+
+npm install gatsby-plugin-sitemap
+`gatsby-plugin-sitemap`

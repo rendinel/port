@@ -1,0 +1,19 @@
+npm install gatsby-plugin-webfonts
+
+inside gatsby-config
+    {
+      resolve: `gatsby-plugin-webfonts`,
+      options: {
+        fonts: {
+          google: [
+            {
+              family: "Montserrat",
+              variants: ["300", "400", "500"],
+            },
+            {
+              family: "Inconsolata",
+              variants: ["400","500","600", "700"],
+            },
+          ],
+        },
+      },

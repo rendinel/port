@@ -1,0 +1,164 @@
+---
+title: Do I Want To Keep Doing This?
+slug: my-test-post
+date: 2021-11-09
+category: Next.js
+excerpt: Quam convallis porta pharetra consequat diam laoreet enim.
+---
+
+import { Link } from "gatsby"
+import { FiInfo } from "react-icons/fi"
+
+<section className='mdx-page'>
+
+## my first mdx file
+
+**Readymade shoreditch sriracha williamsburg, DIY narwhal 3 wolf moon aesthetic godard man bun tumblr viral. Poke authentic pug bespoke.**Yr next level fixie whatever salvia selvage before they sold out edison bulb scenester authentic cronut fashion axe venmo tousled disrupt. Schlitz DIY typewriter raclette jianbing pitchfork. Tofu snackwave copper mug man braid etsy raclette. Letterpress pour-over cloud bread polaroid aesthetic occupy you probably haven't heard of them. _YOLO lomo tote bag, franzen flannel 3 wolf moon subway tile leggings XOXO waistcoat selvage roof party helvetica._
+
+<div className='code'>
+
+```js
+const firstName = "john"
+const lastName = "smith"
+```
+
+</div>
+
+<div className='nice-text'>
+
+<h3>nice text</h3>
+
+<FiInfo className="nice-text-icon"></FiInfo>
+
+Hella raw denim asymmetrical four loko 3 wolf moon man braid. Edison bulb post-ironic offal williamsburg slow-carb, kombucha butcher lumbersexual mustache forage skateboard. Celiac retro drinking vinegar heirloom flannel tousled. Bushwick literally butcher, echo park ethical adaptogen succulents kale chips pabst paleo mustache.
+
+</div>
+
+<h2> React Components </h2>
+
+<h2>video components</h2>
+<h2>regular heading</h2>
+<h2 title="true">title heading</h2>
+<h4>inline code</h4>
+
+`console.log('hello there')`
+
+<h4>blockquote element </h4>
+
+<blockquote>
+  Hella raw denim asymmetrical four loko 3 wolf moon man braid. Edison bulb
+  post-ironic offal williamsburg slow-carb, kombucha butcher lumbersexual
+  mustache forage skateboard.
+</blockquote>
+
+<blockquote>
+  Hella raw denim asymmetrical four loko 3 wolf moon man braid. Edison bulb
+  post-ironic offal williamsburg slow-carb, kombucha butcher lumbersexual
+  mustache forage skateboard.
+</blockquote>
+
+<blockquote>
+  Hella raw denim asymmetrical four loko 3 wolf moon man braid. Edison bulb
+  post-ironic offal williamsburg slow-carb, kombucha butcher lumbersexual
+  mustache forage skateboard.
+</blockquote>
+
+<blockquote>
+  Hella raw denim asymmetrical four loko 3 wolf moon man braid. Edison bulb
+  post-ironic offal williamsburg slow-carb, kombucha butcher lumbersexual
+  mustache forage skateboard. Celiac retro drinking vinegar heirloom flannel
+  tousled. Bushwick literally butcher, echo park ethical adaptogen succulents
+  kale chips pabst paleo mustache.
+</blockquote>
+
+#### Javascript
+
+```js
+// comments
+const name = "john"
+const channel = "coding addict"
+
+function featuredProducts(data) {
+  return data.filter(item => {
+    return item.featured === true
+  })
+}
+featuredProducts()
+```
+
+#### JSX
+
+```jsx
+import React from "react"
+
+const Counter = () => {
+  const [count, setCount] = React.useState(0)
+  return (
+    <section className="counter">
+      <h4>show some love to MDX</h4>
+      <h4>likes {count}</h4>
+      <button className="btn btn-danger" onClick={() => setCount(count + 1)}>
+        i like mdx
+      </button>
+    </section>
+  )
+}
+export default Counter
+```
+
+#### HTML
+
+```html
+<h1>hello world</h1>
+<p class="random">random text</p>
+<section class="contact">
+  <div class="title">
+    <h1>contact us</h1>
+  </div>
+</section>
+```
+
+#### CSS
+
+```css
+max-width: 500px;
+border-radius: var(--radius);
+padding: 1rem 1.5rem;
+background: var(--clr-grey-10);
+text-align: center;
+```
+
+<Link to="/posts" className="btn center-btn">
+  all posts
+</Link>
+
+<h2 title="true">Random h2</h2>
+<h2>Random h2</h2>
+<h4>Inline code</h4>
+`console.log('hello there')`
+
+<blockquote display="info">
+  Hella raw denim asymmetrical four loko 3 wolf moon man braid. Edison bulb
+  post-ironic offal williamsburg slow-carb, kombucha butcher lumbersexual
+  mustache forage skateboard.
+</blockquote>
+
+<blockquote display="default">
+  Hella raw denim asymmetrical four loko 3 wolf moon man braid. Edison bulb
+  post-ironic offal williamsburg slow-carb, kombucha butcher lumbersexual
+  mustache forage skateboard.
+</blockquote>
+
+<blockquote display="warning">
+  Hella raw denim asymmetrical four loko 3 wolf moon man braid. Edison bulb
+  post-ironic offal williamsburg slow-carb, kombucha butcher lumbersexual
+  mustache forage skateboard.
+</blockquote>
+
+<blockquote>
+  Hella raw denim asymmetrical four loko 3 wolf moon man braid. Edison bulb
+  post-ironic offal williamsburg slow-carb, kombucha butcher lumbersexual
+  mustache forage skateboard.
+  9.53
+</blockquote>
+</section>

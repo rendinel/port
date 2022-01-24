@@ -1,0 +1,228 @@
+1-We need to wrap our whole application inside the mdxprovider so we create teh root-mdx.js file inside here
+
+import React from "react"
+import { MDXProvider } from "@mdx-js/react"
+
+const components = {}
+
+export const wrapMDX = ({ element }) => {
+  return <MDXProvider components={components}>{element}</MDXProvider>
+}
+
+2-Inside the gatsby-browser and inside the gatsby-ssr we import our wrapMDX and use it to wrap our whole app,this way we can work only inside root-mdx and the change will apply to the 2 file at the same time
+
+import "./src/styles/global.css"
+import { wrapMDX } from "./root-mdx"
+
+export const wrapRootElement = wrapMDX
+
+3-then inside the components inside root-mdx we can define what our elements inside the mdx file will return
+
+es.const components = {
+  h3: () => <span>i'm not an h3</span>,
+}
+
+for every h3 tag we have inside our mdx file this will return the <span>i'm not an h3</span> instead of every h3 we have inside our mdx file 
+
+this will return hard coded component but we can transform into dinamic code by adding some prop inside the mdx
+<h2 title='true'>Random h2</h2>
+
+and access this prop inside our root mdx 
+const components = {
+  h2: props => {
+    console.log(props)
+    return <h2>random heading</h2>
+  },
+}
+
+if we console log our props 
+Object
+children: "title heading"
+title: "true"
+[[Prototype]]: Object
+
+then we can display the actual title like this and have the rest of the prop passed with a spread operator
+
+const components = {
+  h2: props => {
+    console.log(props)
+    return <h2 {...props}>{props.children}</h2>
+  },
+}
+
+4-then we can create a separate component that we import from an external component if we want a more organized file and return a style for the component based on the props
+
+const myH2 = props => {
+  if (props.title) {
+    return (
+      <h2 {...props} style={{ fontSize: "2rem", color: "red" }}>
+        {props.children}
+      </h2>
+    )
+  }
+  return (
+    <h2 {...props} className="code">
+      {props.children}
+    </h2>
+  )
+}
+
+const components = {
+  h2: myH2,
+}
+
+5-we can set up myh2 in a different file and import it in our root 
+
+we can deconstruct our props inside the component like normal components
+
+import React from "react"
+import styled from "styled-components"
+
+const myH2 = ({ children, title }) => {
+  if (title) {
+    return (
+      <HeadingTwo>
+        <h2>{children}</h2>
+        <div className="underline"></div>
+      </HeadingTwo>
+    )
+  }
+  return (
+    <h2
+      style={{
+        margin: "2rem 0",
+        color: "var(--clr-grey-5)",
+      }}
+    >
+      {children}
+    </h2>
+  )
+}
+const HeadingTwo = styled.div`
+  margin: 2rem 0;
+  .underline {
+    width: 5rem;
+    height: 5px;
+    background: var(--clr-primary-5);
+  }
+`
+const myH4 = props => {
+  return (
+    <h3 style={{ margin: "2rem 0", color: "hsl(245, 62%, 45%)" }}>
+      {props.children}
+    </h3>
+  )
+} 
+
+export { myH2, myH4 }
+
+6-if in our mdx file we have `console.log('hello there')` this will automatically return a tag <code></code> inside our dom,if in our root we write a component that instead of a code tag return another we will run into an errorn we ned to return a code tag not a div tag
+es.const Testing = ({ children }) => {
+  return <div className="code">{children}</div>
+}
+
+const components = {
+  h2: myH2,
+  h4: myH4,
+  inlineCode: Testing,
+}
+
+we can define a component and return a style based pn the props look blockquote
+
+7-Install prism
+npm install --save prism-react-renderer 
+we create a new component example in this case and inside here we import Highlight defaultProps and theme from react-rerenderer
+
+import React from "react"
+import Highlight, { defaultProps } from "prism-react-renderer"
+import theme from "prism-react-renderer/themes/vsDark"
+
+const exampleCode = `
+(function someDemo() {
+  var test = "Hello World!";
+  console.log(test);
+})();`
+
+const Example = () => {
+  return (
+    <Highlight {...defaultProps} code={exampleCode} language="jsx">
+      {({ className, style, tokens, getLineProps, getTokenProps }) => (
+        <pre className={className} style={style}>
+          {tokens.map((line, i) => (
+            <div {...getLineProps({ line, key: i })}>
+              {line.map((token, key) => (
+                <span {...getTokenProps({ token, key })} />
+              ))}
+            </div>
+          ))}
+        </pre>
+      )}
+    </Highlight>
+  )
+}
+
+export default Example
+
+and inside the root-mdx we import and use our component
+import React from "react"
+import { MDXProvider } from "@mdx-js/react"
+import { myH2, myH4 } from "./src/components/Headings"
+import Code from "./src/components/Code"
+import BlockQuote from "./src/components/BlockQuote"
+import Example from "./src/components/Example"
+
+const components = {
+  h2: myH2,
+  h4: myH4,
+  inlineCode: Code,
+  blockquote: BlockQuote,
+  pre: Example,
+}
+
+export const wrapMDX = ({ element }) => {
+  return <MDXProvider components={components}>{element}</MDXProvider>
+}
+
+inside the component we create in this case example
+we need to access our className and if we console log it we can see it will return className='language-valuewepassedfrommdx' es language-jsx so we also need to eliminate the language- with replace method
+const className = props.children.props.className
+const language = className.replace(/language-/, "")
+then we can pass language as a props to our component , for the code we also need to access our code we passed from the mdx file and use trim on it because it return an extraline and pass a props to our component
+const code = props.children.props.children.trim()
+we import the theme we like from 
+import theme from "prism-react-renderer/themes/vsDark"
+and the pass as a props to our component to style the block of code
+
+import React from "react"
+import Highlight, { defaultProps } from "prism-react-renderer"
+import theme from "prism-react-renderer/themes/vsDark"
+
+const exampleCode = `
+(function someDemo() {
+  var test = "Hello World!";
+  console.log(test);
+})();`
+
+const Example = props => {
+  const className = props.children.props.className
+  const language = className.replace(/language-/, "")
+  const code = props.children.props.children.trim()
+  console.log(props)
+  return (
+    <Highlight {...defaultProps} code={code} language={language} theme={theme}>
+      {({ className, style, tokens, getLineProps, getTokenProps }) => (
+        <pre className={className} style={style}>
+          {tokens.map((line, i) => (
+            <div {...getLineProps({ line, key: i })}>
+              {line.map((token, key) => (
+                <span {...getTokenProps({ token, key })} />
+              ))}
+            </div>
+          ))}
+        </pre>
+      )}
+    </Highlight>
+  )
+}
+
+export default Example
